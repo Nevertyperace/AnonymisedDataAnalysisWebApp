@@ -1,0 +1,40 @@
+<style>
+    .menu {
+    font-weight: bold;
+    float: left;
+    color: black;
+    list-style-type: none;
+    margin-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+    background-color: #dddddd; 
+    border-radius: 5px;
+    }
+    .menu li {
+      float: left; }
+    .menu a {
+      display: block;
+      color: black;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none; }
+    .menu a:hover {
+      background-color: #444; }
+
+    #search_bar {
+        position: absolute;
+        right: 15px;
+    }
+</style>
+
+<ul class="menu">
+    <li><a href="{% url 'index_view' %}">Index Page</a></li>
+
+    <li id="search_bar">    
+        <form action="{% url 'index_view' %}" mehod="get">
+            <div>Advanced search</div>
+            <input type="text" name="search"/>
+            <button type="submit">Search</button>
+        </form>
+    </li>
+</ul> 

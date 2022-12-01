@@ -1,0 +1,50 @@
+{% load static %}
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+<link rel="stylesheet" type="text/css" href={% static 'css/styles.css' %}>
+
+<html>
+    <head>
+        {% include "homeapp/navbar.html" %}
+        <title>Data Table</title>
+    </head>
+    <body>
+        <table id="raw_table">
+            <thead>
+            <tr>
+                <th>App Name</th>
+                <th>Environment</th>
+                <th>Business Unit</th>
+                <th>Service Name</th>
+                <th>Consumed Quantity</th>
+                <th>Unit of Measure</th>
+                <th>Cost</th>
+                <th>Date</th>
+                <th>Meter Category</th>
+                <th>Resource Group</th>
+                <th>Resource Location</th>
+                <th>Location</th>
+                <th>Instance ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for data in data_list %}
+                <tr>
+                    <td>{{data.tags_app_name}} </td>
+                    <td>{{data.tags_environment}}</td>
+                    <td>{{data.tags_business_unit}}</td>
+                    <td>{{data.service_name}} </td>
+                    <td>{{data.consumed_quantity}}</td>
+                    <td>{{data.unit_of_measure}}</td>
+                    <td>{{data.cost}}</td>
+                    <td>{{data.date}} </td>
+                    <td>{{data.meter_category}}</td>
+                    <td>{{data.resource_group}}</td>
+                    <td>{{data.resource_location}}</td>
+                    <td>{{data.location}}</td>
+                    <td>{{data.instance_id}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

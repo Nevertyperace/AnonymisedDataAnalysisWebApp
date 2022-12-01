@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+{% load static %}
+<link rel="stylesheet" type="text/css" href={% static 'css/charts.css' %}>
+<html lang="en">
+<head>
+    {% include "homeapp/navbar.html" %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Charts</h1>
+
+
+    <!-- Creates a pie chart with Chart.js -->
+    <div class="chartclass" id="pie1">
+        <label for="chart1">Sum cost distribution per {{word}}:</label>
+        <canvas id="chart1" width="300" height="200"></canvas>
+        <div>
+<script type="text/javascript">
+    var ctx = document.getElementById('chart1').getContext('2d');
+    
+    /* random colour generator, returns array with random RGB values */
+    var colour_array = [];
+    var newColour = function() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+        };
+    {% for j in item %}
+        colour_array.push(newColour());
+    {% endfor %}
+    
+    /* data and configuration for the chart */
+    var chart1 = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            /* item is a list of all services, and costs is a list of their associated costs */
+            labels: [{% for s in item %} '{{ s }}', {% endfor %}],
+            datasets: [{
+                label: 'Cost',
+                data: [{% for c in costs %} '{{ c }}', {% endfor %}],
+                backgroundColor: colour_array,
+                borderColor: ['black'],
+                borderWidth: 1
+            }]
+        },
+
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    })
+</script>
+</div>
+<!-- buttons have a jQuery script at the bottom -->
+<button class="btn1">Preference: Pie Chart</button>
+</div>
+
+<!-- Bar Chart version for the chart above -->
+<hr>
+<div class="chartclass" id="bar1">
+    <label for="chart4">Sum cost distribution per {{word}}:</label>
+    <canvas id="chart4" width="300" height="200"></canvas>
+    <div>
+<script type="text/javascript">
+var ctx = document.getElementById('chart4').getContext('2d');
+
+var colour_array = [];
+var newColour = function() {
+        var r = Math.floor(Math.random() * 255);
+        var g = Math.floor(Math.random() * 255);
+        var b = Math.floor(Math.random() * 255);
+        return "rgb(" + r + "," + g + "," + b + ")";
+    };
+{% for j in item %}
+    colour_array.push(newColour());
+{% endfor %}
+
+var chart4 = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [{% for s in item %} '{{ s }}', {% endfor %}],
+        datasets: [{
+            label: 'Cost',
+            data: [{% for c in costs %} '{{ c }}', {% endfor %}],
+            backgroundColor: colour_array,
+            borderColor: ['black'],
+            borderWidth: 1
+        }]
+    },
+
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+})
+</script>
+</div>
+<button class="btn2">Preference: Bar Chart</button>
+</div>
+
+
+<!-- These charts are only displayed in url /charts/all -->
+{% if service_costs %}
+<hr>
+<!-- pie chart for total cost distribution per service -->
+<div class="chartclass" id="pie2">
+    <label for="chart3">Sum cost distribution per service:</label>
+    <canvas id="chart3" width="300" height="200"></canvas>
+    <div>
+<script type="text/javascript">
+var ctx = document.getElementById('chart3').getContext('2d');
+
+var colour_array = [];
+var newColour = function() {
+        var r = Math.floor(Math.random() * 255);
+        var g = Math.floor(Math.random() * 255);
+        var b = Math.floor(Math.random() * 255);
+        return "rgb(" + r + "," + g + "," + b + ")";
+    };
+{% for j in item %}
+    colour_array.push(newColour());
+{% endfor %}
+
+var chart3 = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: [{% for s in list_of_services %} '{{ s }}', {% endfor %}],
+        datasets: [{
+            label: 'Cost',
+            data: [{% for c in service_costs %} '{{ c }}', {% endfor %}],
+            backgroundColor: colour_array,
+            borderColor: ['black'],
+            borderWidth: 1
+        }]
+    },
+
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+})
+</script>
+</div>
+<button class="btn3">Preference: Pie Chart</button>
+</div>
+
+
+<hr>
+<!-- bar chart version for the graph above -->
+<div class="chartclass" id="bar2">
+    <label for="chart5">Sum cost distribution per service:</label>
+    <canvas id="chart5" width="300" height="200"></canvas>
+    <div>
+<script type="text/javascript">
+var ctx = document.getElementById('chart5').getContext('2d');
+
+var colour_array = [];
+var newColour = function() {
+        var r = Math.floor(Math.random() * 255);
+        var g = Math.floor(Math.random() * 255);
+        var b = Math.floor(Math.random() * 255);
+        return "rgb(" + r + "," + g + "," + b + ")";
+    };
+{% for j in item %}
+    colour_array.push(newColour());
+{% endfor %}
+
+var chart5 = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [{% for s in list_of_services %} '{{ s }}', {% endfor %}],
+        datasets: [{
+            label: 'Cost',
+            data: [{% for c in service_costs %} '{{ c }}', {% endfor %}],
+            backgroundColor: colour_array,
+            borderColor: ['black'],
+            borderWidth: 1
+        }]
+    },
+
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+})
+</script>
+</div>
+<button class="btn4">Preference: Bar Chart</button>
+</div>
+{% endif %}
+
+
+<hr>
+<!-- Line graph showing costs per date -->
+<div class="chartclass" id="line">
+    <label for="chart2">Sum cost distribution by date:</label>
+    <canvas id="chart2" width="300" height="200"></canvas>
+    <div>
+<script type="text/javascript">
+var ctx = document.getElementById('chart2').getContext('2d');
+
+var colour_array = [];
+var newColour = function() {
+        var r = Math.floor(Math.random() * 255);
+        var g = Math.floor(Math.random() * 255);
+        var b = Math.floor(Math.random() * 255);
+        return "rgb(" + r + "," + g + "," + b + ")";
+    };
+{% for j in item %}
+    colour_array.push(newColour());
+{% endfor %}
+
+var chart2 = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [{% for s in date_array %} '{{ s }}', {% endfor %}],
+        datasets: [{
+            label: 'Sum of all costs associated with {{app}} per day of November',
+            data: [{% for c in cost_by_date %} '{{ c }}', {% endfor %}],  
+            pointRadius: 1,
+            backgroundColor: 'black',
+            borderColor: 'black',
+            borderWidth: 1
+        },
+        /* second data line, only displayed on app specific chart templates */
+        {% if c_b_d_all %}
+        {
+            /* c_b_d_all is a list of total costs by date across whole DB */
+            label: 'Line for total costs across whole database for comparison (arbitrary units)',
+            data: [{% for c in c_b_d_all %} '{{ c }}'/{{ ratio }}, {% endfor %}],  
+            /* disabled tooltips for this second data line */
+            pointRadius: 0,
+            pointHitRadius: 0,
+            backgroundColor: 'turquoise',
+            borderColor: 'turquoise',
+            borderWidth: 1
+        }
+        {% endif %}
+    ]
+    },
+
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                },
+                display: true,
+                text: 'title',
+            }]
+        },
+    }
+})
+</script>
+</div>
+</div>
+
+<script>
+    /* bar charts are hidden by default */
+    window.onload = $('#bar1').hide();
+    window.onload = $('#bar2').hide();
+
+    /* preference for bar/pie chart can be changed to display in different format */
+    $(document).ready(function(){
+          $(".btn1").click(function(){
+            $("#pie1").hide();
+            $("#bar1").show();
+          });
+          $(".btn2").click(function(){
+            $("#bar1").hide();
+            $("#pie1").show();
+          });
+          $(".btn3").click(function(){
+            $("#pie2").hide();
+            $("#bar2").show();
+          });
+          $(".btn4").click(function(){
+            $("#bar2").hide();
+            $("#pie2").show();
+          });
+        });
+</script>
+</body>
+</html>

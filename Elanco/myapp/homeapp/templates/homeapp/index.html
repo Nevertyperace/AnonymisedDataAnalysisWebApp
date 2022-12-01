@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<link rel="stylesheet" type="text/css" href={% static 'css/index.css' %}>
+<script type="text/javascript" src="{% static 'js/script2.js' %}"></script>
+
+<html lang="en">
+<head>
+    {% include "homeapp/navbar.html" %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+</head>
+<body>
+    <hr>
+    <div class="row">
+        <div class="column">
+            <label for="apps">Applications:</label>
+                <ul>
+                    <input type="button" onclick="location.href='{% url 'raw_view' %}';" value="Data for: All" />
+                    <input type="button" onclick="location.href='{% url 'charts_all' %}';" value="Charts for: All" />
+                </ul>
+                <!-- Lists all apps, buttons linked to further information -->
+                <ul id="id01" name="apps">
+                    {% for data in data_list %}
+                        {% ifchanged %}<li>{{data.tags_app_name}}<br>
+                        <input type="button" onclick="location.href='{% url 'depth_view' data.tags_app_name %}';" value="Raw Data" />
+                        <input type="button" onclick="location.href='{% url 'charts_view' data.tags_app_name %}';" value="Charts" />
+                        </li>{% endifchanged %}
+                    {% endfor %}
+                </ul>
+            <br>
+        </div>
+        <div class="column">
+            <label for="resources">Resources/Services:</label>
+            <ul id="id02" name="resources">
+                {% for rsrc in resources %}
+                {% ifchanged %}<li>{{rsrc.service_name}}</li>{% endifchanged %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <!-- script below sorts applications alphabetically-->
+    <script>window.onload = sortList()</script>
+</body>
+</html>
